@@ -8,6 +8,14 @@ import java.util.Arrays;
 public class Grid {
   boolean srcExist = true;
   boolean destExist = true;
+  GridObj src;
+  GridObj dest;
+
+  public Grid() {
+    src = new GridObj(0, 0, 2);
+    dest = new GridObj(6, 6, 3);
+  }
+
   int[][] grid = { // default grid
       { 2, 1, 0, 0, 1, 0, 0, 0 },
       { 1, 0, 0, 1, 1, 0, 1, 0 },
@@ -18,27 +26,6 @@ public class Grid {
       { 1, 1, 0, 1, 1, 1, 3, 0 },
       { 0, 1, 1, 1, 1, 1, 1, 1 }
   };
-
-  class GridObj {
-    int row;
-    int column;
-    int value;
-
-    GridObj(int row, int column, int value) {
-      this.row = row;
-      this.column = column;
-      this.value = value;
-    }
-
-    public void setPosition(int newRow, int newColumn) {
-      row = newRow;
-      column = newColumn;
-    }
-
-    public void printCord() {
-      System.out.println("(" + row + ", " + column + ")");
-    }
-  }
 
   public void placeBlocked(int row, int column) {
     grid[row][column] = 0;
@@ -87,6 +74,27 @@ public class Grid {
     }
     // debug
     System.out.println();
+  }
+
+  class GridObj {
+    int row;
+    int column;
+    int value;
+
+    GridObj(int row, int column, int value) {
+      this.row = row;
+      this.column = column;
+      this.value = value;
+    }
+
+    public void setPosition(int newRow, int newColumn) {
+      row = newRow;
+      column = newColumn;
+    }
+
+    public void printCord() {
+      System.out.println("(" + row + ", " + column + ")");
+    }
   }
 
   public static void main(String[] args) {
