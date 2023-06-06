@@ -14,7 +14,7 @@ public class MyFrame extends JFrame {
   private JPanel gridPanel;
   private JPanel menuPanel;
   private JButton printBtn;
-  private JButton button2;
+  private JButton srcBtn;
   private JLabel[][] labelArr;
   private int x; // grid size
 
@@ -75,7 +75,6 @@ public class MyFrame extends JFrame {
     optionPanel.setPreferredSize(new Dimension(100, 250));
 
     printBtn = new JButton("Print");
-
     printBtn.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -83,9 +82,14 @@ public class MyFrame extends JFrame {
       }
     });
 
-    button2 = new JButton("Test 2");
+    srcBtn = new JButton("Source");
+    // srcBtn.addActionListener(new ActionListener() {
+    // @Override
+    // public void actionPerformed(ActionEvent e) {
+    // }
+    // });
     optionPanel.add(printBtn);
-    optionPanel.add(button2);
+    optionPanel.add(srcBtn);
   }
 
   public void setUpMenu() {

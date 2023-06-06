@@ -56,6 +56,22 @@ public class Grid {
     }
   }
 
+  public void setSource(int row, int column) {
+    if (!srcExist) {
+      src.setPosition(row, column);
+      grid[row][column] = src.value;
+      srcExist = true;
+    }
+  }
+
+  public void setDest(int row, int column) {
+    if (!destExist) {
+      dest.setPosition(row, column);
+      grid[row][column] = dest.value;
+      destExist = true;
+    }
+  }
+
   // clears the array sets all values to 1 / open
   public void clear() {
     for (int[] row : grid) {
@@ -95,16 +111,5 @@ public class Grid {
     public void printCord() {
       System.out.println("(" + row + ", " + column + ")");
     }
-  }
-
-  public static void main(String[] args) {
-    Grid g = new Grid();
-    g.printGrid();
-
-    Grid.GridObj src = g.new GridObj(0, 0, 2);
-    System.out.println(src.row);
-
-    src.setPosition(1, 3);
-    src.printCord();
   }
 }
