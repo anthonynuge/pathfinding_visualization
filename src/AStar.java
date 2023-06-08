@@ -3,10 +3,12 @@
  * AStar
  * Fcost = G + H
  */
+import java.util.ArrayList;
 import java.util.PriorityQueue;
 import java.util.Stack;
 
 public class AStar {
+  ArrayList<Pair> pathList;
 
   public static class Pair {
     int first;
@@ -85,6 +87,7 @@ public class AStar {
     System.out.println("The path is: ");
 
     Stack<Pair> path = new Stack<>();
+    pathList = new ArrayList<Pair>();
 
     int row = dest.first;
     int col = dest.second;
@@ -99,6 +102,7 @@ public class AStar {
 
     while (!path.empty()) {
       Pair p = path.peek();
+      pathList.add(p);
       path.pop();
       System.out.println("-> (" + p.first + "," + p.second + ") ");
     }

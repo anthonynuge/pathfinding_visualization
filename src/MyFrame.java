@@ -3,20 +3,19 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.*;
+import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.JFrame;
 
-/**
- * MyFrame
- */
 public class MyFrame extends JFrame {
   private JPanel optionPanel;
   private JPanel gridPanel;
   private JPanel menuPanel;
   private JButton printBtn;
   public JButton runBtn;
-  private JLabel[][] labelArr;
+  public JLabel[][] labelArr;
   private int x; // grid size
+  Timer timer;
 
   public MyFrame(Grid g) {
     x = g.grid.length;
@@ -45,7 +44,6 @@ public class MyFrame extends JFrame {
       for (int j = 0; j < x; j++) {
         labelArr[i][j] = new JLabel("(" + i + "," + j + ")");
         labelArr[i][j].setOpaque(true);
-
         int value = g.grid[i][j];
         switch (value) {
           case 0:
@@ -54,12 +52,6 @@ public class MyFrame extends JFrame {
           case 1:
             labelArr[i][j].setBackground(Color.white);
             break;
-          // case 2:
-          // labelArr[i][j].setBackground(Color.blue);
-          // break;
-          // case 3:
-          // labelArr[i][j].setBackground(Color.orange);
-          // break;
         }
 
         GMouse gridMouse = new GMouse(i, j, g);
@@ -69,13 +61,11 @@ public class MyFrame extends JFrame {
     }
     labelArr[g.src.row][g.src.column].setBackground(Color.blue);
     labelArr[g.dest.row][g.dest.column].setBackground(Color.orange);
-
   }
 
   public void setUpOptions(Grid g) {
     optionPanel = new JPanel(new GridLayout(1, 2));
     optionPanel.setPreferredSize(new Dimension(100, 250));
-
     printBtn = new JButton("Print");
     printBtn.addActionListener(new ActionListener() {
       @Override
@@ -83,13 +73,7 @@ public class MyFrame extends JFrame {
         g.printGrid();
       }
     });
-
     runBtn = new JButton("Run");
-    // srcBtn.addActionListener(new ActionListener() {
-    // @Override
-    // public void actionPerformed(ActionEvent e) {
-    // }
-    // });
     optionPanel.add(printBtn);
     optionPanel.add(runBtn);
   }
@@ -99,4 +83,25 @@ public class MyFrame extends JFrame {
     menuPanel.setPreferredSize(new Dimension(100, 50));
   }
 
+  // delays the color change when drawing the path;
+  public void drawPath(ArrayList<AStar.Pair> path) {
+    int delay = 500;
+    int endIndex = path.size() - 1;
+    timer = new Timer(delay, new ActionListener() {
+      int index = 1;
+
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        if (index < endIndex) {
+          int first = path.get(index).first;
+          int second = path.get(index).second;
+          labelArr[first][second].setBackground(Color.PINK);
+          index++;
+        } else {
+          timer.stop();
+        }
+      }
+    });
+    timer.start();
+  }
 }
