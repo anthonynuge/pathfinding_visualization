@@ -14,7 +14,7 @@ public class MyFrame extends JFrame {
   private JPanel gridPanel;
   private JPanel menuPanel;
   private JButton printBtn;
-  private JButton srcBtn;
+  public JButton runBtn;
   private JLabel[][] labelArr;
   private int x; // grid size
 
@@ -24,7 +24,6 @@ public class MyFrame extends JFrame {
     setLayout(new BorderLayout());
 
     setUpMenu();
-    // setUpGrid(g.grid);
     setUpGrid(g);
     setUpOptions(g);
 
@@ -55,12 +54,12 @@ public class MyFrame extends JFrame {
           case 1:
             labelArr[i][j].setBackground(Color.white);
             break;
-          case 2:
-            labelArr[i][j].setBackground(Color.blue);
-            break;
-          case 3:
-            labelArr[i][j].setBackground(Color.orange);
-            break;
+          // case 2:
+          // labelArr[i][j].setBackground(Color.blue);
+          // break;
+          // case 3:
+          // labelArr[i][j].setBackground(Color.orange);
+          // break;
         }
 
         GMouse gridMouse = new GMouse(i, j, g);
@@ -68,6 +67,9 @@ public class MyFrame extends JFrame {
         gridPanel.add(labelArr[i][j]);
       }
     }
+    labelArr[g.src.row][g.src.column].setBackground(Color.blue);
+    labelArr[g.dest.row][g.dest.column].setBackground(Color.orange);
+
   }
 
   public void setUpOptions(Grid g) {
@@ -82,14 +84,14 @@ public class MyFrame extends JFrame {
       }
     });
 
-    srcBtn = new JButton("Source");
+    runBtn = new JButton("Run");
     // srcBtn.addActionListener(new ActionListener() {
     // @Override
     // public void actionPerformed(ActionEvent e) {
     // }
     // });
     optionPanel.add(printBtn);
-    optionPanel.add(srcBtn);
+    optionPanel.add(runBtn);
   }
 
   public void setUpMenu() {

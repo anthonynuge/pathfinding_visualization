@@ -1,7 +1,7 @@
 
 /**
  * Grid
- * values of 0=blocked; 1=open; 2=src; 3= dest;
+ * values of 0=blocked; 1=open;
  */
 import java.util.Arrays;
 
@@ -12,18 +12,18 @@ public class Grid {
   GridObj dest;
 
   public Grid() {
-    src = new GridObj(0, 0, 2);
-    dest = new GridObj(6, 6, 3);
+    src = new GridObj(0, 0);
+    dest = new GridObj(6, 6);
   }
 
   int[][] grid = { // default grid
-      { 2, 1, 0, 0, 1, 0, 0, 0 },
+      { 1, 1, 0, 0, 1, 0, 0, 0 },
       { 1, 0, 0, 1, 1, 0, 1, 0 },
       { 1, 1, 0, 1, 0, 0, 1, 0 },
       { 1, 1, 0, 1, 1, 1, 1, 1 },
       { 1, 1, 0, 0, 0, 1, 1, 1 },
       { 0, 1, 1, 1, 0, 1, 1, 0 },
-      { 1, 1, 0, 1, 1, 1, 3, 0 },
+      { 1, 1, 0, 1, 1, 1, 1, 0 },
       { 0, 1, 1, 1, 1, 1, 1, 1 }
   };
 
@@ -38,38 +38,31 @@ public class Grid {
   // for changing one cell;
   public void changeCell(int row, int column) {
     int value = grid[row][column];
-    switch (value) {
-      case 0:
-        grid[row][column] = 1;
-        break;
-      case 1:
-        grid[row][column] = 0;
-        break;
-      case 2:
-        grid[row][column] = 1;
-        srcExist = false;
-        break;
-      case 3:
-        grid[row][column] = 1;
-        destExist = false;
-        break;
+    if (!srcExist) {
+      setSource(row, column);
+    } else if (!destExist) {
+      setDest(row, column);
+    } else if (src.row == row && src.column == column) {
+      srcExist = false;
+    } else if (dest.row == row && dest.column == column) {
+      destExist = false;
+    } else if (value == 1) {
+      grid[row][column] = 0;
+    } else if (value == 0) {
+      grid[row][column] = 1;
     }
   }
 
   public void setSource(int row, int column) {
-    if (!srcExist) {
-      src.setPosition(row, column);
-      grid[row][column] = src.value;
-      srcExist = true;
-    }
+    src.setPosition(row, column);
+    grid[row][column] = 1;
+    srcExist = true;
   }
 
   public void setDest(int row, int column) {
-    if (!destExist) {
-      dest.setPosition(row, column);
-      grid[row][column] = dest.value;
-      destExist = true;
-    }
+    dest.setPosition(row, column);
+    grid[row][column] = 1;
+    destExist = true;
   }
 
   // clears the array sets all values to 1 / open
@@ -95,12 +88,10 @@ public class Grid {
   class GridObj {
     int row;
     int column;
-    int value;
 
-    GridObj(int row, int column, int value) {
+    GridObj(int row, int column) {
       this.row = row;
       this.column = column;
-      this.value = value;
     }
 
     public void setPosition(int newRow, int newColumn) {

@@ -21,74 +21,28 @@ public class GMouse extends MouseAdapter {
   @Override
   public void mouseClicked(MouseEvent e) {
     JLabel source = (JLabel) e.getSource();
-    int value = g.grid[rowIndex][colIndex];
 
+    // for removing source/dest or toggling
     if (g.srcExist && g.destExist) {
-      switch (value) {
-        case 0:
-          source.setBackground(Color.WHITE);
-          g.changeCell(rowIndex, colIndex);
-          break;
-        case 1:
-          source.setBackground(Color.darkGray);
-          g.changeCell(rowIndex, colIndex);
-          break;
-        case 2:
-          source.setBackground(Color.WHITE);
-          g.changeCell(rowIndex, colIndex);
-          break;
-        case 3:
-          source.setBackground(Color.WHITE);
-          g.changeCell(rowIndex, colIndex);
-          break;
+      g.changeCell(rowIndex, colIndex);
+      int value = g.grid[rowIndex][colIndex];
+      if (value == 0) {
+        source.setBackground(Color.darkGray);
+      } else {
+        source.setBackground(Color.WHITE);
       }
-
     } else if (!g.srcExist) {
       source.setBackground(Color.BLUE);
-      g.setSource(rowIndex, colIndex);
+      g.changeCell(rowIndex, colIndex);
+      // g.setSource(rowIndex, colIndex);
     } else if (!g.destExist) {
       source.setBackground(Color.ORANGE);
-      g.setDest(rowIndex, colIndex);
+      g.changeCell(rowIndex, colIndex);
     }
 
-    // if (value == 0) {
-    // source.setBackground(Color.WHITE);
-    // g.changeCell(rowIndex, colIndex);
-    // }
-    // if (value == 1) {
-    // source.setBackground(Color.darkGray);
-    // g.changeCell(rowIndex, colIndex);
-    // }
-    // if (value == 2) {
-    // source.setBackground(Color.WHITE);
-    // g.changeCell(rowIndex, colIndex);
-    // }
-    // if (value == 3) {
-    // source.setBackground(Color.WHITE);
-    // g.changeCell(rowIndex, colIndex);
-    // }
     System.out.println("Clicked: " + source.getText());
     System.out.println("Index: [" + rowIndex + ", " + colIndex + "]");
   }
-
-  // @Override
-  // public void mouseEntered(MouseEvent e) {
-  // JLabel source = (JLabel) e.getSource();
-  // System.out.println("" + rowIndex + "," + colIndex);
-  // //source.setBackground(Color.YELLOW);
-
-  // if (isHolding == true) {
-  // source.setBackground(Color.white);
-  // value = 1;
-  // System.out.println("" + rowIndex + ", " + colIndex + " value =" + value);
-  // }
-  // }
-
-  // @Override
-  // public void mouseExited(MouseEvent e) {
-  // JLabel source = (JLabel) e.getSource();
-  // source.setBackground(Color.WHITE);
-  // }
 
   @Override
   public void mousePressed(MouseEvent e) {
@@ -96,7 +50,6 @@ public class GMouse extends MouseAdapter {
       isHolding = true;
       System.out.println(isHolding);
     }
-
   }
 
   @Override
@@ -106,5 +59,4 @@ public class GMouse extends MouseAdapter {
       System.out.println(isHolding);
     }
   }
-
 }
