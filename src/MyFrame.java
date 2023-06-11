@@ -25,15 +25,10 @@ public class MyFrame extends JFrame {
     y = g.grid[0].length;
     setTitle("A* Path Finding Visualizer");
     setLayout(new BorderLayout());
-    centerContainer = new JPanel();
-    centerContainer.setBackground(Color.cyan);
-    centerContainer.setLayout(null);
-    
-
     setUpMenu();
     setUpGrid(g);
-    centerContainer.setLayout(null);
-    centerContainer.setPreferredSize(new Dimension(1600, 960));
+
+    setUpCenterContainer();
     centerContainer.add(gridPanel);
 
     setUpOptions(g);
@@ -46,6 +41,12 @@ public class MyFrame extends JFrame {
 
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setVisible(true);
+  }
+
+  private void setUpCenterContainer() {
+    centerContainer = new JPanel();
+    centerContainer.setLayout(null);
+    centerContainer.setPreferredSize(new Dimension(1600, 960));
   }
 
   public void setUpGrid(Grid g) {

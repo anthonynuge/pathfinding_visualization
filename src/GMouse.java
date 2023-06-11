@@ -5,7 +5,11 @@ import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 
 public class GMouse extends MouseAdapter {
-  private boolean isHolding = false;
+  static boolean isHolding = false;
+  static boolean holdingErase = false;
+  private boolean special = false;
+  // static boolean srcExist = true;
+  // static boolean destExist = true;
   private int rowIndex;
   private int colIndex;
   private Grid g;
@@ -14,6 +18,13 @@ public class GMouse extends MouseAdapter {
     this.rowIndex = rowIndex;
     this.colIndex = colIndex;
     this.g = g;
+
+    if (g.src.row == rowIndex && g.src.column == colIndex) {
+      this.special = true;
+    }
+    if (g.dest.row == rowIndex && g.dest.column == colIndex) {
+      this.special = true;
+    }
   }
 
   @Override
@@ -28,17 +39,22 @@ public class GMouse extends MouseAdapter {
         source.setBackground(Color.darkGray);
       } else {
         source.setBackground(Color.WHITE);
+        if (special) {
+          special = false;
+        }
       }
     } else if (!g.srcExist) {
       source.setBackground(Color.BLUE);
+      special = true;
       g.changeCell(rowIndex, colIndex);
       // g.setSource(rowIndex, colIndex);
     } else if (!g.destExist) {
+      special = true;
       source.setBackground(Color.ORANGE);
       g.changeCell(rowIndex, colIndex);
     }
 
-    System.out.println("Clicked: " + source.getText());
+    // System.out.println("Clicked: " + source.getText());
     System.out.println("Index: [" + rowIndex + ", " + colIndex + "]");
   }
 
@@ -46,7 +62,9 @@ public class GMouse extends MouseAdapter {
   public void mousePressed(MouseEvent e) {
     if (SwingUtilities.isLeftMouseButton(e)) {
       isHolding = true;
-      System.out.println(isHolding);
+    }
+    if (SwingUtilities.isRightMouseButton(e)) {
+      holdingErase = true;
     }
   }
 
@@ -54,7 +72,22 @@ public class GMouse extends MouseAdapter {
   public void mouseReleased(MouseEvent e) {
     if (SwingUtilities.isLeftMouseButton(e)) {
       isHolding = false;
-      System.out.println(isHolding);
+    }
+    if (SwingUtilities.isRightMouseButton(e)) {
+      holdingErase = false;
+    }
+  }
+
+  @Override 
+  public void mouseEntered(MouseEvent e) {
+    JLabel source = (JLabel) e.getSource();
+    if (isHolding && !special) {
+      g.placeBlocked(rowIndex, colIndex);
+      source.setBackground(Color.DARK_GRAY);
+    }
+    if (holdingErase && !special) {
+      g.placeOpen(rowIndex, colIndex);
+      source.setBackground(Color.WHITE);
     }
   }
 }
