@@ -173,73 +173,87 @@ public class AStar {
 
       for (int addX = -1; addX <= 1; addX++) {
         for (int addY = -1; addY <= 1; addY++) {
-          Pair neighbour = new Pair(i + addX, j + addY);
-          if (isValid(grid, rows, cols, neighbour)) {
-            if (cellDetails[neighbour.first] == null) {
-              cellDetails[neighbour.first] = new Cell[cols];
-            }
-            if (cellDetails[neighbour.first][neighbour.second] == null) {
-              cellDetails[neighbour.first][neighbour.second] = new Cell();
-            }
-
-            if (isDestination(neighbour, dest)) {
-              cellDetails[neighbour.first][neighbour.second].parent = new Pair(i, j);
-              System.out.println("The destination cell is found");
-              tracePath(cellDetails, rows, cols, dest);
-              return;
-            }
-
-            else if (!closedList[neighbour.first][neighbour.second]
-                && isUnblocked(grid, rows, cols, neighbour)) {
-              double gNew, hNew, fNew;
-              gNew = cellDetails[i][j].g + 1.0;
-              hNew = calculateHValue(neighbour, dest);
-              fNew = gNew + hNew;
-
-              if (cellDetails[neighbour.first][neighbour.second].f == -1
-                  || cellDetails[neighbour.first][neighbour.second].f > fNew) {
-
-                openList.add(new Details(fNew, neighbour.first, neighbour.second));
-
-                // Update the details of this
-                // cell
-                cellDetails[neighbour.first][neighbour.second].g = gNew;
-                // heuristic function cellDetails[neighbour.first][neighbour.second].h = hNew;
-                cellDetails[neighbour.first][neighbour.second].f = fNew;
+          if(addX == 0 || addY == 0 ) {                // for vertical and horizonatal pathfinding remove this if statement if want diagonal movement
+            Pair neighbour = new Pair(i + addX, j + addY);
+            if (isValid(grid, rows, cols, neighbour)) {
+              if (cellDetails[neighbour.first] == null) {
+                cellDetails[neighbour.first] = new Cell[cols];
+              }
+              if (cellDetails[neighbour.first][neighbour.second] == null) {
+                cellDetails[neighbour.first][neighbour.second] = new Cell();
+              }
+  
+              if (isDestination(neighbour, dest)) {
                 cellDetails[neighbour.first][neighbour.second].parent = new Pair(i, j);
+                System.out.println("The destination cell is found");
+                tracePath(cellDetails, rows, cols, dest);
+                return;
+              }
+  
+              else if (!closedList[neighbour.first][neighbour.second]
+                  && isUnblocked(grid, rows, cols, neighbour)) {
+                double gNew, hNew, fNew;
+                gNew = cellDetails[i][j].g + 1.0;
+                hNew = calculateHValue(neighbour, dest);
+                fNew = gNew + hNew;
+  
+                if (cellDetails[neighbour.first][neighbour.second].f == -1
+                    || cellDetails[neighbour.first][neighbour.second].f > fNew) {
+  
+                  openList.add(new Details(fNew, neighbour.first, neighbour.second));
+  
+                  // Update the details of this
+                  // cell
+                  cellDetails[neighbour.first][neighbour.second].g = gNew;
+                  // heuristic function cellDetails[neighbour.first][neighbour.second].h = hNew;
+                  cellDetails[neighbour.first][neighbour.second].f = fNew;
+                  cellDetails[neighbour.first][neighbour.second].parent = new Pair(i, j);
+                }
               }
             }
+
           }
+          // Pair neighbour = new Pair(i + addX, j + addY);
+          // if (isValid(grid, rows, cols, neighbour)) {
+          //   if (cellDetails[neighbour.first] == null) {
+          //     cellDetails[neighbour.first] = new Cell[cols];
+          //   }
+          //   if (cellDetails[neighbour.first][neighbour.second] == null) {
+          //     cellDetails[neighbour.first][neighbour.second] = new Cell();
+          //   }
+
+          //   if (isDestination(neighbour, dest)) {
+          //     cellDetails[neighbour.first][neighbour.second].parent = new Pair(i, j);
+          //     System.out.println("The destination cell is found");
+          //     tracePath(cellDetails, rows, cols, dest);
+          //     return;
+          //   }
+
+          //   else if (!closedList[neighbour.first][neighbour.second]
+          //       && isUnblocked(grid, rows, cols, neighbour)) {
+          //     double gNew, hNew, fNew;
+          //     gNew = cellDetails[i][j].g + 1.0;
+          //     hNew = calculateHValue(neighbour, dest);
+          //     fNew = gNew + hNew;
+
+          //     if (cellDetails[neighbour.first][neighbour.second].f == -1
+          //         || cellDetails[neighbour.first][neighbour.second].f > fNew) {
+
+          //       openList.add(new Details(fNew, neighbour.first, neighbour.second));
+
+          //       // Update the details of this
+          //       // cell
+          //       cellDetails[neighbour.first][neighbour.second].g = gNew;
+          //       // heuristic function cellDetails[neighbour.first][neighbour.second].h = hNew;
+          //       cellDetails[neighbour.first][neighbour.second].f = fNew;
+          //       cellDetails[neighbour.first][neighbour.second].parent = new Pair(i, j);
+          //     }
+          //   }
+          // }
         }
       }
     }
 
     System.out.println("Failed to find the Destination Cell");
-  }
-
-  public static void main(String[] args) {
-    // 0: The cell is blocked
-    // 1: The cell is not blocked
-
-    int[][] grid = {
-        { 1, 1, 0, 0, 1, 0, 0, 0 },
-        { 1, 0, 0, 1, 1, 0, 1, 0 },
-        { 1, 1, 0, 1, 0, 0, 1, 0 },
-        { 1, 1, 0, 1, 1, 1, 1, 1 },
-        { 1, 1, 0, 0, 0, 1, 1, 1 },
-        { 0, 1, 1, 1, 0, 1, 1, 0 },
-        { 1, 1, 0, 1, 1, 1, 1, 0 },
-        { 0, 1, 1, 1, 1, 1, 1, 1 }
-    };
-
-    // Start is the left-most upper-most corner
-    Pair src = new Pair(0, 0);
-    // (8, 0);
-
-    // Destination is the right-most bottom-most corner
-    Pair dest = new Pair(6, 6);
-
-    AStar app = new AStar();
-    app.aStarSearch(grid, grid.length, grid[0].length, src, dest);
   }
 }

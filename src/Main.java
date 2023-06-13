@@ -11,7 +11,12 @@ public class Main {
         AStar.Pair src = new AStar.Pair(g.src.row, g.src.column);
         AStar.Pair dest = new AStar.Pair(g.dest.row, g.dest.column);
         app.aStarSearch(g.grid, g.grid.length, g.grid[0].length, src, dest);
-        f.drawPath(app.pathList);
+        try {
+          f.drawPath(app.pathList);
+        } catch (Exception ex) {
+          // TODO: handle exception
+          System.out.println("no path");
+        }
       }
     });
   }

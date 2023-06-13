@@ -7,9 +7,7 @@ import javax.swing.SwingUtilities;
 public class GMouse extends MouseAdapter {
   static boolean isHolding = false;
   static boolean holdingErase = false;
-  private boolean special = false;
-  // static boolean srcExist = true;
-  // static boolean destExist = true;
+  private boolean special = false; // for cells that represent src or dest skip over when hold interacting
   private int rowIndex;
   private int colIndex;
   private Grid g;
@@ -43,6 +41,7 @@ public class GMouse extends MouseAdapter {
           special = false;
         }
       }
+      // if either src or dest does not exist
     } else if (!g.srcExist) {
       source.setBackground(Color.BLUE);
       special = true;

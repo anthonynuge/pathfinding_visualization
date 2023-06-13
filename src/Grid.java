@@ -86,8 +86,8 @@ public class Grid {
   public void clear() {
     for (int[] row : grid) {
       Arrays.fill(row, 1);
-      srcExist = false;
-      destExist = false;
+      // srcExist = false;
+      // destExist = false;
     }
     // debug
     System.out.println("cleared\n");
