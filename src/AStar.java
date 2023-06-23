@@ -173,7 +173,8 @@ public class AStar {
 
       for (int addX = -1; addX <= 1; addX++) {
         for (int addY = -1; addY <= 1; addY++) {
-          if(addX == 0 || addY == 0 ) {                // for vertical and horizonatal pathfinding remove this if statement if want diagonal movement
+          if (addX == 0 || addY == 0) { // for vertical and horizonatal pathfinding remove this if statement if want
+                                        // diagonal movement
             Pair neighbour = new Pair(i + addX, j + addY);
             if (isValid(grid, rows, cols, neighbour)) {
               if (cellDetails[neighbour.first] == null) {
@@ -182,26 +183,26 @@ public class AStar {
               if (cellDetails[neighbour.first][neighbour.second] == null) {
                 cellDetails[neighbour.first][neighbour.second] = new Cell();
               }
-  
+
               if (isDestination(neighbour, dest)) {
                 cellDetails[neighbour.first][neighbour.second].parent = new Pair(i, j);
                 System.out.println("The destination cell is found");
                 tracePath(cellDetails, rows, cols, dest);
                 return;
               }
-  
+
               else if (!closedList[neighbour.first][neighbour.second]
                   && isUnblocked(grid, rows, cols, neighbour)) {
                 double gNew, hNew, fNew;
                 gNew = cellDetails[i][j].g + 1.0;
                 hNew = calculateHValue(neighbour, dest);
                 fNew = gNew + hNew;
-  
+
                 if (cellDetails[neighbour.first][neighbour.second].f == -1
                     || cellDetails[neighbour.first][neighbour.second].f > fNew) {
-  
+
                   openList.add(new Details(fNew, neighbour.first, neighbour.second));
-  
+
                   // Update the details of this
                   // cell
                   cellDetails[neighbour.first][neighbour.second].g = gNew;
@@ -215,40 +216,41 @@ public class AStar {
           }
           // Pair neighbour = new Pair(i + addX, j + addY);
           // if (isValid(grid, rows, cols, neighbour)) {
-          //   if (cellDetails[neighbour.first] == null) {
-          //     cellDetails[neighbour.first] = new Cell[cols];
-          //   }
-          //   if (cellDetails[neighbour.first][neighbour.second] == null) {
-          //     cellDetails[neighbour.first][neighbour.second] = new Cell();
-          //   }
+          // if (cellDetails[neighbour.first] == null) {
+          // cellDetails[neighbour.first] = new Cell[cols];
+          // }
+          // if (cellDetails[neighbour.first][neighbour.second] == null) {
+          // cellDetails[neighbour.first][neighbour.second] = new Cell();
+          // }
 
-          //   if (isDestination(neighbour, dest)) {
-          //     cellDetails[neighbour.first][neighbour.second].parent = new Pair(i, j);
-          //     System.out.println("The destination cell is found");
-          //     tracePath(cellDetails, rows, cols, dest);
-          //     return;
-          //   }
+          // if (isDestination(neighbour, dest)) {
+          // cellDetails[neighbour.first][neighbour.second].parent = new Pair(i, j);
+          // System.out.println("The destination cell is found");
+          // tracePath(cellDetails, rows, cols, dest);
+          // return;
+          // }
 
-          //   else if (!closedList[neighbour.first][neighbour.second]
-          //       && isUnblocked(grid, rows, cols, neighbour)) {
-          //     double gNew, hNew, fNew;
-          //     gNew = cellDetails[i][j].g + 1.0;
-          //     hNew = calculateHValue(neighbour, dest);
-          //     fNew = gNew + hNew;
+          // else if (!closedList[neighbour.first][neighbour.second]
+          // && isUnblocked(grid, rows, cols, neighbour)) {
+          // double gNew, hNew, fNew;
+          // gNew = cellDetails[i][j].g + 1.0;
+          // hNew = calculateHValue(neighbour, dest);
+          // fNew = gNew + hNew;
 
-          //     if (cellDetails[neighbour.first][neighbour.second].f == -1
-          //         || cellDetails[neighbour.first][neighbour.second].f > fNew) {
+          // if (cellDetails[neighbour.first][neighbour.second].f == -1
+          // || cellDetails[neighbour.first][neighbour.second].f > fNew) {
 
-          //       openList.add(new Details(fNew, neighbour.first, neighbour.second));
+          // openList.add(new Details(fNew, neighbour.first, neighbour.second));
 
-          //       // Update the details of this
-          //       // cell
-          //       cellDetails[neighbour.first][neighbour.second].g = gNew;
-          //       // heuristic function cellDetails[neighbour.first][neighbour.second].h = hNew;
-          //       cellDetails[neighbour.first][neighbour.second].f = fNew;
-          //       cellDetails[neighbour.first][neighbour.second].parent = new Pair(i, j);
-          //     }
-          //   }
+          // // Update the details of this
+          // // cell
+          // cellDetails[neighbour.first][neighbour.second].g = gNew;
+          // // heuristic function cellDetails[neighbour.first][neighbour.second].h =
+          // hNew;
+          // cellDetails[neighbour.first][neighbour.second].f = fNew;
+          // cellDetails[neighbour.first][neighbour.second].parent = new Pair(i, j);
+          // }
+          // }
           // }
         }
       }

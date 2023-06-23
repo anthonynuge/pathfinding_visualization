@@ -13,7 +13,7 @@ public class MyFrame extends JFrame {
   private JButton printBtn;
   public JButton runBtn;
   private JButton clearBtn;
-  private JButton resetBtn;
+  private JButton generateBtn;
   private JComboBox<String> algoOptions;
   public JLabel[][] labelArr;
   public JPanel centerContainer;
@@ -114,6 +114,26 @@ public class MyFrame extends JFrame {
 
     createCombo();
     menuPanel.add(algoOptions);
+
+    generateBtn = new JButton("Generate Maze");
+    generateBtn.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        g.generate();
+        for (int i = 0; i < g.grid.length; i++) {
+          for (int j = 0; j < g.grid[0].length; j++) {
+            if (g.grid[i][j] == 0) {
+              labelArr[i][j].setBackground(Color.DARK_GRAY);
+            } else {
+              labelArr[i][j].setBackground(Color.WHITE);
+            }
+          }
+        }
+        labelArr[g.src.row][g.src.column].setBackground(Color.BLUE);
+        labelArr[g.dest.row][g.dest.column].setBackground(Color.ORANGE);
+      }
+    });
+    menuPanel.add(generateBtn);
 
     clearBtn = new JButton("Clear");
     clearBtn.addActionListener(new ActionListener() {
