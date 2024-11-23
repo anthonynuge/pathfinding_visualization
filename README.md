@@ -1,6 +1,12 @@
 # Pathfinding Visualization Java Application
 
-A Java-based application that visualizes pathfinding algorithms and provides an interactive experience for users to create and solve mazes. The application features recursive maze generation and allows users to manually draw mazes with the mouse.
+A Java-based application that visualizes pathfinding algorithms and provides an interactive experience for users to create and solve mazes. I created this app in order to better understand pathfinding. Users can draw mazes or have the program recursively generate a maze.
+
+## Demonstration
+
+Below is a small animation showing the application in action:
+
+![Maze Solver Demo](demo/demo.gif)
 
 ## Features
 
@@ -61,9 +67,3 @@ The application will now be running, and you can begin interacting with the GUI 
 - **Draw Maze:** Use your mouse to click and drag, creating walls for your custom maze.
 - **Generate Maze:** Click the "Generate Maze" button to create a maze using a recursive algorithm.
 - **Solve Maze:** Click the "Solve" button to visualize the pathfinding solution as it navigates through the maze.
-
-## Demonstration
-
-Below is a small animation showing the application in action:
-
-![Maze Solver Demo](demo/demo.gif)
